@@ -1,13 +1,11 @@
-
-
 import {createContext, useContext, useState, useEffect} from "react";
 import {onAuthStateChanged} from "firebase/auth";
 import {auth} from "../config/firebase";
 
-// create context
+
 const AuthContext = createContext({});
 
-// provide context
+
 function AuthProvider({ children}  ): JSX.Element {
 
     //TODO: Implement a local storage function that
@@ -21,10 +19,10 @@ function AuthProvider({ children}  ): JSX.Element {
             if(signedInUser){
                 const email = signedInUser.email
                 //setUser("email", email)
-                setUser(signedInUser)
-                
+                setUser(signedInUser)                
             }else{
                 //do something here 
+                setUser(null)
             }
         })
 
@@ -43,7 +41,7 @@ function AuthProvider({ children}  ): JSX.Element {
     )
 }
 
-//use context
+
 const useAuth = () => useContext(AuthContext)
 
 

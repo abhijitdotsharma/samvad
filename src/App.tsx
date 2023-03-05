@@ -1,11 +1,11 @@
 import './App.css';
-import {useEffect} from "react";
+import { useEffect } from "react";
 
-import {collection, getDocs} from "firebase/firestore"
-import {db} from "./config/firebase";
+import { collection, getDocs } from "firebase/firestore"
+import { db } from "./config/firebase";
 
 import Auth from './components/Auth';
-import {useState} from "react";
+import { useState } from "react";
 import { useAuth } from './context/auth-context';
 
 
@@ -22,29 +22,31 @@ function App() {
   //   },
   // ]);
 
+  const { user } = useAuth();
+  // Loading Component when App Mounts till firebase returns it's 
+  // onAuthStateChanged promise
 
-useEffect(() => {
-    async function getTodoList(){
 
+  useEffect(() => {
+    async function getTodoList() {
       const todoListRef = collection(db, "todos");
-
       // Get the data
-      const res = await getDocs(todoListRef)  
-      const todoList = res.docs.map(doc=> doc.data())
-
+      const res = await getDocs(todoListRef)
+      const todoList = res.docs.map(doc => doc.data())
       console.log(todoList)
       // Display the data
     }
 
-    getTodoList()
-}, [])
+    // getTodoList()
+  }, [])
 
 
-  
   return (
-    <div className="App">  
+    <div className="App">
       <h1>Yo Wha't up</h1>
       <Auth />
+
+
     </div>
   )
 }

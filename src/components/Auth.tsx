@@ -1,83 +1,63 @@
-import React, { useEffect, useState } from 'react';
-
-import {
-    createUserWithEmailAndPassword,
-    signInWithPopup,
-    GoogleAuthProvider,
-    onAuthStateChanged,
-    signOut,
-} from "firebase/auth";
+import {GoogleAuthProvider} from "firebase/auth";
 import { auth } from "../config/firebase";
 
-import { useAuth } from '../context/auth-context';
+import { handleLogin, handleGoogleLogin, handleSignOut } from '../utils';
+import { useInputValues } from '../hooks';
+
+// interface ButtonProps {
+//     label: string,
+//     handleButtonClick: React.MouseEventHandler<HTMLButtonElement> | undefined,
+// }
+
+function AuthButton({ label, handleButtonClick, ...buttonArgs }) {
+    return (
+        <button onClick={() => handleButtonClick(buttonArgs)}>
+            {label}
+        </button>
+    )
+}
+
+
+
+function AuthInput({label, value, setOnChange}){
+
+    return(
+            <input 
+            type="text"
+            placeholder={label}
+            value={value}
+            onChange={(e) => setOnChange(e.target.value)}
+            />
+    )
+}
 
 function Auth() {
 
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-
-
+    const {email, setEmail, password, setPassword} = useInputValues();
     const googleProvider = new GoogleAuthProvider();
-    async function handleGoogleLogin() {
-        signInWithPopup(auth, googleProvider)
-            .then(() => {
-                console.log("Signed In W/Google")
-            })
-            .catch((error) => {
-                console.error(`error from firebase: ${error?.message}`)
-            })
 
-    }
-
-
-    async function handleLogin() {
-        createUserWithEmailAndPassword(auth, email, password)
-            .then((userCredential) => {
-                // dosomething with the created user
-                const user = userCredential.user;
-                console.log(`created user: ${user}`)
-            })
-            .catch((error) => {
-                console.error(`err from server: ${error}`)
-            })
-    }
-
-    async function handleSignOut() {
-        signOut(auth)
-            .then(() => {
-                console.log(`signed out successfully`)
-            })
-            .catch((error) => {
-                console.log(`error from server: ${error}`)
-            })
-
-    }
 
     return (
         <div>
-            <input
-                type="text"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+           <AuthInput label="email" value={email} setOnChange={setEmail}/>
+           <AuthInput label="pass" value={password} setOnChange={setPassword} />
+
+            <AuthButton
+                label="SignUp"
+                handleButtonClick={handleLogin}
+                auth={auth} email={email} password={password}
             />
-            <input
-                type="text"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+            <AuthButton
+                label="Google Login"
+                handleButtonClick={handleGoogleLogin}
+                auth={auth} googleProvider={googleProvider}
             />
-
-            <button
-                onClick={handleLogin}
-            >Signup</button>
-
-            <button
-                onClick={handleGoogleLogin}
-            >Google Login</button>
-
-
-            <button
-                onClick={handleSignOut}
-            >Logout</button>
+            
+            <AuthButton 
+                label="Logout"
+                handleButtonClick={handleSignOut}
+                auth={auth}
+            />
         </div>
     )
 }
