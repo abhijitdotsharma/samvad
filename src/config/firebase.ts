@@ -8,12 +8,12 @@ import { getAuth } from 'firebase/auth';
 // change it after basic broilerplate works
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyA99oReFch_tHPP5vUb62Vs1imZgrvBRw0',
-  authDomain: 'basic-react-todo-a58f8.firebaseapp.com',
-  projectId: 'basic-react-todo-a58f8',
-  storageBucket: 'basic-react-todo-a58f8.appspot.com',
-  messagingSenderId: '940874351852',
-  appId: '1:940874351852:web:e4830ab9cf13bdd06991c9',
+  apiKey: import.meta.env.VITE_APP_API_KEY,
+  authDomain: import.meta.env.VITE_APP_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_APP_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_APP_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_APP_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_APP_ID,
 };
 
 const app = initializeApp(firebaseConfig);
