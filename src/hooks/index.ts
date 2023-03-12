@@ -1,6 +1,3 @@
-import useInputValues from "./useInputValue";
+// import useInputValues from './useInputValue';
 
-
-export {
-    useInputValues
-}
+// export { useInputValues };

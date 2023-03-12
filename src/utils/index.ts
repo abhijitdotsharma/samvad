@@ -1,8 +1,3 @@
-import { handleLogin, handleGoogleLogin, handleSignOut } from "./login";
+import { handleLogin, handleGoogleLogin, handleSignOut } from './login';
 
-
-export {
-    handleLogin,
-    handleSignOut,
-    handleGoogleLogin
-}
+export { handleLogin, handleSignOut, handleGoogleLogin };
